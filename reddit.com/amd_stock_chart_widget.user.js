@@ -11,7 +11,7 @@
 // @include     /^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/radeon/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
-// @version     3
+// @version     4
 // @grant       none
 // ==/UserScript==
 
