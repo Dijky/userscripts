@@ -1,11 +1,17 @@
 // ==UserScript==
 // @name        AMD Stock Chart Widget
 // @namespace   https://github.com/dijky/userscripts/reddit.com
+// @author		Dijky
 // @description Add a stock chart widget to the sidebar of AMD subreddits. Widget powered by TradingView.com
 // @downloadURL	https://github.com/Dijky/userscripts/raw/master/reddit.com/amd_stock_chart_widget.user.js
+// @supportURL	https://github.com/Dijky/userscripts/issues
 // @include     /^https?://\w+\.reddit\.com/r/Amd/.*$/
+// @include     /^https?://\w+\.reddit\.com/r/AyyMD/.*$/
+// @include     /^https?://\w+\.reddit\.com/r/AMDHelp/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
-// @version     2
+// @include     /^https?://\w+\.reddit\.com/r/radeon/.*$/
+// @include     /^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
+// @version     3
 // @grant       none
 // ==/UserScript==
 
@@ -19,7 +25,7 @@
 			height: options.bigmode ? "500px" : "300px",
 			chartOnly: false,
 			symbols: [
-				["AMD", "AMD|1m"], ["Nvidia", "NVDA|1m"], ["Intel", "INTC|1m"]
+				["AMD", "AMD|1m"], ["Intel", "INTC|1m"], ["Nvidia", "NVDA|1m"]
 			],
 			fontColor: orange,
 			trendLineColor: orange,
@@ -35,7 +41,7 @@
 		console.log(">> dijky/reddit.com/amd_stock_chart_widget is active");
 
 		var targetNode = document.getElementsByClassName("side")[0];
-		var nextNode = targetNode.getElementsByClassName("spacer")[3];
+		var nextNode = targetNode.getElementsByClassName("spacer")[4];
 		
 		var chartNode = document.createElement("div");
 		chartNode.id = "dijky-stock-chart-widget";
