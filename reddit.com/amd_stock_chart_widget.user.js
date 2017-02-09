@@ -5,38 +5,22 @@
 // @downloadURL	https://github.com/Dijky/userscripts/raw/master/reddit.com/amd_stock_chart_widget.user.js
 // @include     /^https?://\w+\.reddit\.com/r/Amd/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
-// @version     1
+// @version     2
 // @grant       none
 // ==/UserScript==
 
-(function(){
+(function(document, window, options){
 	function run(document, window)
 	{
-		console.log(">> dijky.reddit.stockChart is active");
-
-		var targetNode = document.getElementsByClassName("side")[0];
-		var nextNode = targetNode.getElementsByClassName("spacer")[3];
-		
-		var chartNode = document.createElement("div");
-		chartNode.id = "dijky-stock-chart-widget";
-		chartNode.classList.add("spacer");
-		chartNode.style.width = "100%";
-		targetNode.insertBefore(chartNode, nextNode);
-		
 		var orange = "rgba(241, 79, 37, 1)";
-		
 		var chartWidgetOptions = {
 			container_id: "dijky-stock-chart-widget",
 			width: "100%",
-			tabs: [ "Stock" ],
-			symbols: {
-				"Stock": ["AMD", "Nvidia", "Intel"]
-			},
-			symbols_description: {
-				"AMD": "NASDAQ:AMD",
-				"Nvidia": "NASDAQ:NVDA",
-				"Intel": "NASDAQ:INTC"
-			},
+			height: options.bigmode ? "500px" : "300px",
+			chartOnly: false,
+			symbols: [
+				["AMD", "AMD|1m"], ["Nvidia", "NVDA|1m"], ["Intel", "INTC|1m"]
+			],
 			fontColor: orange,
 			trendLineColor: orange,
 			underLineColor: "rgba(241, 79, 37, 0.08)",
@@ -47,6 +31,17 @@
 			// styleTickerChangeDownColor: "#000000", 
 			styleWidgetNoBorder: true
 		};
+	
+		console.log(">> dijky/reddit.com/amd_stock_chart_widget is active");
+
+		var targetNode = document.getElementsByClassName("side")[0];
+		var nextNode = targetNode.getElementsByClassName("spacer")[3];
+		
+		var chartNode = document.createElement("div");
+		chartNode.id = "dijky-stock-chart-widget";
+		chartNode.classList.add("spacer");
+		chartNode.style.width = "100%";
+		targetNode.insertBefore(chartNode, nextNode);
 		
 		var scriptNode = document.createElement("script");
 		scriptNode.setAttribute("type", "text/javascript");
@@ -56,7 +51,15 @@
 		{
 			// console.log("TradingView JS loaded");
 			// Create widget
-			var chartWidget = new TradingView.MiniWidget(chartWidgetOptions);
+			var chartWidget;
+			if (options.bigmode)
+			{
+			    chartWidget = new TradingView.MediumWidget(chartWidgetOptions);
+			}
+			else
+			{
+					chartWidget = new TradingView.MiniWidget(chartWidgetOptions);
+			}
 		}
 		scriptNode.setAttribute("src", "https://s3.amazonaws.com/tradingview/tv.js");
 	}
@@ -67,4 +70,4 @@
 	}
 
 	window.addEventListener("load", handler);
-})(document, window);
+})(document, window, { bigmode: false });
