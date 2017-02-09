@@ -25,7 +25,7 @@
 			height: options.bigmode ? "500px" : "300px",
 			chartOnly: false,
 			symbols: [
-				["AMD", "AMD|1m"], ["Intel", "INTC|1m"], ["Nvidia", "NVDA|1m"]
+				["AMD", "AMD|"+options.range], ["Intel", "INTC|"+options.range], ["Nvidia", "NVDA|"+options.range]
 			],
 			fontColor: orange,
 			trendLineColor: orange,
@@ -76,4 +76,4 @@
 	}
 
 	window.addEventListener("load", handler);
-})(document, window, { bigmode: false });
+})(document, window, { bigmode: false, range: "1m" });
