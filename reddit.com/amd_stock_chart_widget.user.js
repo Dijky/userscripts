@@ -2,7 +2,7 @@
 // @name        AMD Stock Chart Widget
 // @namespace   https://github.com/dijky/userscripts/reddit.com
 // @description Add a stock chart widget to the sidebar of AMD subreddits. Widget powered by TradingView.com
-// @downloadURL	
+// @downloadURL	https://github.com/Dijky/userscripts/raw/master/reddit.com/amd_stock_chart_widget.user.js
 // @include     /^https?://\w+\.reddit\.com/r/Amd/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @version     1
