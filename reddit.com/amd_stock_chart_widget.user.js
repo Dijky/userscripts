@@ -11,27 +11,38 @@
 // @include     /^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/radeon/.*$/
 // @include     /^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
-// @version     4
+// @version     5
 // @grant       none
 // ==/UserScript==
 
 (function(document, window, options){
 	function run(document, window)
 	{
-		var orange = "rgba(241, 79, 37, 1)";
+		var orange = function(a) {return "rgba(241, 79, 37, " + a + ")"; };
+		var symbols = [];
+		for (var k in options.symbols)
+		{
+			if (options.symbols.hasOwnProperty(k))
+			{
+				var s = options.symbols[k];
+				if (s.indexOf("|") == -1)
+				{
+					s += "|" + options.range;
+				}
+				symbols.push([k, s]);
+			}
+		}
 		var chartWidgetOptions = {
 			container_id: "dijky-stock-chart-widget",
 			width: "100%",
-			height: options.bigmode ? "500px" : "300px",
+			height: options.bigmode ? "500px" : ((210+symbols.length*31) + "px"),
 			chartOnly: false,
-			symbols: [
-				["AMD", "AMD|"+options.range], ["Intel", "INTC|"+options.range], ["Nvidia", "NVDA|"+options.range]
-			],
-			fontColor: orange,
-			trendLineColor: orange,
-			underLineColor: "rgba(241, 79, 37, 0.08)",
-			activeTickerBackgroundColor: "rgba(241, 79, 37, 0.4)",
-			styleTabActiveBorderColor: orange,
+			symbols: symbols,
+			fontColor: orange(1),
+			trendLineColor: orange(1),
+			underLineColor: orange(0.08),
+			activeTickerBackgroundColor: orange(0.4),
+			styleTabActiveBorderColor: orange(1),
 			styleTickerSymbolColor: "#000000",
 			styleTickerChangeUpColor: "",
 			// styleTickerChangeDownColor: "#000000", 
@@ -76,4 +87,18 @@
 	}
 
 	window.addEventListener("load", handler);
-})(document, window, { bigmode: false, range: "1m" });
+})(document, window, {
+	// Configuration
+	bigmode: false, // Enable big mode: true or false
+	range: "3m",    // Chart range for all symbols: 1d, 1m, 3m, 1y, 5y
+	symbols: {
+		// List of symbols in the format
+		// "display name": "symbol name",
+		"AMD": "NASDAQ:AMD",
+		// "AMD 1y": "NASDAQ:AMD|1y", // You can override the chart range with |1d or |1y etc
+		"Intel": "NASDAQ:INTC",
+		"Nvidia": "NASDAQ:NVDA",
+		// "SOXX": "NASDAQ:SOXX",
+		// "NASDAQ Comp": "NASX",
+	}
+});
