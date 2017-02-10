@@ -13,7 +13,7 @@
 // @include		/^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/radeon/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
-// @version		6.1
+// @version		6.2
 // @grant		GM_getValue
 // @grant		GM_setValue
 // @grant		GM_addStyle
@@ -23,11 +23,28 @@
 
 (function(document, window){
 	var chartNode;
+	var targetNode;
 	var chartWidget;
 	var configuration;
 	
-	function buildWidget(chartNode)
+	function buildWidget()
 	{
+		chartNode = document.createElement("div");
+		chartNode.id = "dijky-stock-chart-widget";
+		chartNode.classList.add("spacer");
+		chartNode.style.width = "100%";
+		
+		var index = configuration.get("widget_index");
+		var elms = targetNode.getElementsByClassName("spacer");
+		if (index < elms.length)
+		{
+			targetNode.insertBefore(chartNode, elms[index]);
+		}
+		else
+		{
+			targetNode.appendChild(chartNode);
+		}
+		
 		while(chartNode.firstChild)
 		{
 			chartNode.removeChild(chartNode.firstChild);
@@ -40,14 +57,14 @@
 		var symbols = [];
 		for (var k = 0; k < _symbols.length; ++k)
 		{
-			if (_symbols[k].indexOf("//") == 0)
+			if (_symbols[k].indexOf("//") === 0)
 			{
 				continue;
 			}
 			var d = _symbols[k].split("=");
 			var s = d[1];
 			
-			if (s.indexOf("|") == -1)
+			if (s.indexOf("|") === -1)
 			{
 				s += "|" + range;
 			}
@@ -67,7 +84,7 @@
 			styleTabActiveBorderColor: orange(1),
 			styleTickerSymbolColor: "#000000",
 			styleTickerChangeUpColor: "",
-			// styleTickerChangeDownColor: "#000000", 
+			// styleTickerChangeDownColor: "#000000",
 			styleWidgetNoBorder: true
 		};
 	
@@ -97,6 +114,11 @@
 					variant: "radio",
 					"default": "small"
 				},
+				"widget_index": {
+					label: "Widget position index",
+					type: "number",
+					"default": 4
+				},
 				"range": {
 					label: "Default date range",
 					type: "select",
@@ -118,12 +140,12 @@
 						"Intel=NASDAQ:INTC",
 						"//NASDAQ Comp=NASX", // Disable symbol with "//" prefix
 						"//SOXX=NASDAQ:SOXX",
-						"//AMD 1y=NASDAQ:AMD|1y" // Override default date range with "|1d", "|1y" etc. suffix
+						"//AMD 1y=NASDAQ:AMD|1y" // Override default date range with "|1d", "|1y" etc. suffix						
 					]
 				}
 			},
 			onSave: function(values) {
-				chartWidget = buildWidget(chartNode);
+				chartWidget = buildWidget();
 			}
 		};
 		return new MonkeyConfig(cfg);
@@ -137,16 +159,8 @@
 			configuration.open("layer");
 		});
 		
-		var targetNode = document.getElementsByClassName("side")[0];
-		var nextNode = targetNode.getElementsByClassName("spacer")[4];
-		
-		chartNode = document.createElement("div");
-		chartNode.id = "dijky-stock-chart-widget";
-		chartNode.classList.add("spacer");
-		chartNode.style.width = "100%";
-		targetNode.insertBefore(chartNode, nextNode);
-		
-		chartWidget = buildWidget(chartNode);
+		targetNode = document.getElementsByClassName("side")[0];
+		chartWidget = buildWidget();
 	}
 
 	handler();
