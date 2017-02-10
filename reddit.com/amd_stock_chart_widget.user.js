@@ -13,7 +13,7 @@
 // @include		/^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/radeon/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
-// @version		6.2
+// @version		6.2.1
 // @grant		GM_getValue
 // @grant		GM_setValue
 // @grant		GM_addStyle
@@ -29,10 +29,13 @@
 	
 	function buildWidget()
 	{
-		chartNode = document.createElement("div");
-		chartNode.id = "dijky-stock-chart-widget";
-		chartNode.classList.add("spacer");
-		chartNode.style.width = "100%";
+		if (typeof chartNode == "undefined")
+		{
+			chartNode = document.createElement("div");
+			chartNode.id = "dijky-stock-chart-widget";
+			chartNode.classList.add("spacer");
+			chartNode.style.width = "100%";
+		}
 		
 		var index = configuration.get("widget_index");
 		var elms = targetNode.getElementsByClassName("spacer");
