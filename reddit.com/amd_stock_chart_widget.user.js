@@ -115,7 +115,10 @@
 					"default": [
 						"AMD=NASDAQ:AMD",
 						"Nvidia=NASDAQ:NVDA",
-						"Intel=NASDAQ:INTC"
+						"Intel=NASDAQ:INTC",
+						"//NASDAQ Comp=NASX", // Disable symbol with "//" prefix
+						"//SOXX=NASDAQ:SOXX",
+						"//AMD 1y=NASDAQ:AMD|1y" // Override default date range with "|1d", "|1y" etc. suffix
 					]
 				}
 			},
