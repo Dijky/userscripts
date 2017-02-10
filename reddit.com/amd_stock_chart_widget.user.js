@@ -5,7 +5,7 @@
 // @description	Add a stock chart widget to the sidebar of AMD subreddits. Widget powered by TradingView.com
 // @downloadURL	https://github.com/Dijky/userscripts/raw/master/reddit.com/amd_stock_chart_widget.user.js
 // @supportURL	https://github.com/Dijky/userscripts/issues
-// @require		https://raw.github.com/odyniec/MonkeyConfig/master/monkeyconfig.js
+// @require		https://raw.githubusercontent.com/Dijky/MonkeyConfig/master/monkeyconfig.js
 // @require		https://s3.amazonaws.com/tradingview/tv.js
 // @include		/^https?://\w+\.reddit\.com/r/Amd/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/AyyMD/.*$/
@@ -13,7 +13,7 @@
 // @include		/^https?://\w+\.reddit\.com/r/AMD_Stock/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/radeon/.*$/
 // @include		/^https?://\w+\.reddit\.com/r/AdvancedMicroDevices/.*$/
-// @version		6
+// @version		6.1
 // @grant		GM_getValue
 // @grant		GM_setValue
 // @grant		GM_addStyle
